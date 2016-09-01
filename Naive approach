@@ -1,0 +1,53 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <map>
+#include <string>
+
+int *nbuilSuffixArr(string s,int len){
+  map<string,int> m;
+  vector<string> v;
+  int *suffixes=new int[len];
+  for(int i=0;i<len;++i){
+    m[s.substr(i.len-i)]=i;
+    v.push_back(s.substr(i,len-i));
+  }
+  sort(v.begin(),v.end());
+  for(int i=0;i<v.size();++i){
+    suffixes[i]=m[v[i]];
+  }
+  return suffixes;
+}
+
+void search(string pat,string input,int *arr,int len){
+  int low=0,high=len-1;
+  int n=pat.size();
+  while(low<=high){
+    int mid=low+(high-low)/2;
+    int res=strncmp(pat,input+arr[mid],n);
+    if(res==0){
+      cout<<"Pattern found at index "<<arr[mid];
+      return;
+    }
+    else if(res<0){
+      high=mid-1;
+    }
+    else
+      low=mid+1;
+  }
+  cout<<"Pattern not found";
+}
+
+int main(){
+  string s;
+  cin>>s;
+  int len=s.size();
+  string pattern;
+  cin>>pattern;
+  int *suffArr=buildSuffixArr(s,len);
+  for(int i=0;i<len;++i){
+  cout<<suffArr[i]<<",";
+  }
+  cout<<endl;
+  search(patt,s,suffArr,len);
+}
