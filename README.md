@@ -1,1 +1,1 @@
-# suffixArray
+# Important basics
